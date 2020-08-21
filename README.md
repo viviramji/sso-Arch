@@ -4,8 +4,36 @@ Inicio de sesión único (SSO) hace referencia a cuando un usuario inicia sesió
 
 Por ejemplo, en el caso de Google con sus diferentes productos, cuando un usuario ingresa a su Gmail, el usuario automáticamente tiene acceso a Youtube, Google Drive, Photos, entre otros productos de Google.
 
-![Image of Yaktocat](images/sso-arch.jpg)
+![SSO Graph](images/sso-arch.jpg)
 
+## Diagrama de flujo de una arquitectura típica de SSO
+
+![Arquitectura típica de SSO](images/typical-sso.png)
+
+...
+
+## Pasos para correr el proyecto
+
+Estructura del repo
+
+```
+sso-arch
+│    README.md
+└─── images/...
+│   
+└─── app1
+│   │   flask app
+│   │   ...
+│   
+└─── app2
+│    │   flask app
+│    │   ...
+│
+└─── auth-server
+     │  flask app
+     │  ...   
+    
+```
 
 ## Referencias
 
