@@ -1,5 +1,6 @@
 venv/
 
+
 *.pyc
 __pycache__/
 
@@ -14,7 +15,7 @@ build/
 *.egg-info/
 
 ## app1 
-app1/venv/
+flaskr/venv-app1/
 ## app2
 app2/env-app2
 ## auth-server 
