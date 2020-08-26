@@ -12,7 +12,10 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
-    print("register from auth server")
+    # print(vars(request))
+
+    origin_url = request.args.get('origin') 
+
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -34,7 +37,7 @@ def register():
                 (username, generate_password_hash(password))
             )
             db.commit()
-            return redirect(url_for('auth.login'))
+            return redirect(origin_url)
 
         flash(error)
 
@@ -43,6 +46,7 @@ def register():
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
+    origin_url = request.args.get('origin') 
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -60,7 +64,7 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['id']
-            return redirect(url_for('index'))
+            return redirect(origin_url)
 
         flash(error)
 
