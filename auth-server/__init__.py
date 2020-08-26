@@ -27,7 +27,7 @@ def create_app(test_config=None):
     # a simple page that says hello
     @app.route('/hello')
     def hello():
-        return 'Hello, World!'
+        return 'Home Home'
 
     from . import db
     db.init_app(app)
@@ -36,6 +36,10 @@ def create_app(test_config=None):
     # Exportar todas las rutas que conducen a auth/xxx
     from . import auth
     app.register_blueprint(auth.bp)
+
+    from . import private
+    app.register_blueprint(private.bp)
+    app.add_url_rule('/', endpoint='index')
 
 
     return app
