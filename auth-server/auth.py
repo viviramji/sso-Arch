@@ -32,6 +32,7 @@ def register():
             error = 'User {} is already registered.'.format(username)
 
         if error is None:
+            session.clear()
             db.execute(
                 'INSERT INTO user (username, password) VALUES (?, ?)',
                 (username, generate_password_hash(password))
@@ -47,28 +48,33 @@ def register():
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
     origin_url = request.args.get('origin') 
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        db = get_db()
-        error = None
-        user = db.execute(
-            'SELECT * FROM user WHERE username = ?', (username,)
-        ).fetchone()
+    user_id = session.get('user_id')
 
-        if user is None:
-            error = 'Incorrect username.'
-        elif not check_password_hash(user['password'], password):
-            error = 'Incorrect password.'
+    if user_id is None:
+        if request.method == 'POST':
+            username = request.form['username']
+            password = request.form['password']
+            db = get_db()
+            error = None
+            user = db.execute(
+                'SELECT * FROM user WHERE username = ?', (username,)
+            ).fetchone()
 
-        if error is None:
-            session.clear()
-            session['user_id'] = user['id']
-            return redirect(origin_url)
+            if user is None:
+                error = 'Incorrect username.'
+            elif not check_password_hash(user['password'], password):
+                error = 'Incorrect password.'
 
-        flash(error)
+            if error is None:
+                session.clear()
+                session['user_id'] = user['id']
+                return redirect(origin_url)
 
-    return render_template('auth/login.html')
+            flash(error)
+
+        return render_template('auth/login.html')
+    else:
+        return redirect(origin_url)
 
 
 @bp.before_app_request
