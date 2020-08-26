@@ -13,12 +13,14 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
     print("register")
-    return redirect('http://localhost:5001/auth/register', code=301)
+    #return redirect(url_for('http://localhost:5001/auth/register', origin='localhost:5000'))
+    return redirect('http://127.0.0.1:5001/auth/register?origin=http://127.0.0.1:5000', code=301)
 
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
-    return redirect('http://localhost:5001/auth/login', code=301)
+    #return redirect(url_for('http://localhost:5001/auth/log', origin='localhost:5000'))
+    return redirect('http://127.0.0.1:5001/auth/login?origin=http://127.0.0.1:5000', code=301)
 
 
 @bp.before_app_request
